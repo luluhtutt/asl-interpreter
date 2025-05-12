@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Starter Template for Bootstrap</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!-- <link href="../../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet"> -->
+
+  <!-- Custom styles for this template -->
+  <link href="starter-template.css" rel="stylesheet">
+
+  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+  <!-- <script src="../../assets/js/ie-emulation-modes-warning.js"></script> -->
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+          aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">Project name</a>
+      </div>
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li class="active"><a href="#">Home</a></li>
+          <li><a href="#intro">Introduction</a></li>
+          <li><a href="#obj">Project Objective</a></li>
+          <li><a href="#design">Design</a></li>
+          <li><a href="#drawings">Drawings</a></li>
+          <li><a href="#testing">Testing</a></li>
+          <li><a href="#result">Result</a></li>
+        </ul>
+      </div><!--/.nav-collapse -->
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <div class="starter-template">
+      <h1>Pi-Tamagotchi</h1>
+      <p class="lead">ECE 5725 Final Project<br>By Sana Chawla (sc2347) and Lulu Htutt (lh543).</p>
+    </div>
+
+    <hr>
+    <div class="center-block">
+      <iframe width="640" height="360" src="https://www.youtube.com/embed?v=et91Gea6CPk" frameborder="0"
+        allowfullscreen></iframe>
+      <h4 style="text-align:center;">Demonstration Video</h4>
+    </div>
+
+    <hr id="intro">
+
+    <div style="text-align:center;">
+      <h2>Introduction</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        Tamagotchi is a handheld virtual pet simulation game released in the 1990s, where the user must take
+        care of the pet by feeding and training it. Our project, Pi-Tamagotchi, is inspired by this nostalgic
+        system. We maintain the objective of taking care of virtual pets and keeping them happy, healthy, and
+        fed, but also incorporating a facial recognition component to foster a greater sense of comraderie and
+        connection. We used a Raspberry-Pi 4, a PiTFT, and a Pi camera to create a device reminiscent of the
+        Tamagotchi, and OpenCV and Pygame for the system software.
+      </p>
+    </div>
+
+    <hr id='obj'>
+
+    <div class="row">
+      <div class="col-md-4" style="text-align:center;">
+        <img class="img-rounded" src="pics/device.jpg" alt="Generic placeholder image" width="240" height="240">
+      </div>
+      <div class="col-md-8" style="font-size:18px;">
+        <h2>Project Objective:</h2>
+        <ul>
+          <li>
+            Create an interactive system where the user has to take care of a virtual creature.
+          </li>
+          <li>
+            Use facial recognition to make Pi-Tamagotchi more interactive and personal.
+          </li>
+          <li>
+            Use a SQL database system to maintain game state.
+          </li>
+          <li>
+            Foster a sense of comraderie by maintaining a user's history of creatures.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <hr id='design'>
+
+    <div>
+      <h2 style="text-align:center;">Design</h2>
+      <h3>Frontend</h3>
+      <p style="text-align: left;padding: 0px 30px;">
+        The Pi-Tamagotchi user interface was implemented using Pygame, displayed on the PiTFT. We were able to
+        center the system around five main screens: Login, Files, Main, Action, and Death. For every menu where
+        the user had options to select, they would navigate through using buttons, and the current choice was
+        indicated by a '>' to the left of the menu item.
+      </p>
+      <p style="text-align: left;padding: 0px 30px;">
+        The login screen had three options: New Player, Returning Player, and Quit. Choosing either of the two
+        first options would open up a camera that counted down from 5.
+      </p>
+      <div style="text-align:center;">
+        <img class="img-rounded" src="pics/login_design.jpeg" alt="Generic placeholder image" style="width:80%;">
+        <h4>Login Design</h4>
+      </div>
+      <p style="text-align: left;padding: 0px 30px;">
+        After logging in as a new/returning user, the user is redirected to a screen with all of their available
+        tamagotchis. For new users, all of the ten slots will be empty, but for returning users, the slots will
+        have their saved tamagotchis and data. Each "file" slot has the tamagotchi's ID and name, as well as an
+        icon. The user can navigate through these slots and select the one they desire to interact with. If an
+        EMPTY slot is selected, a new, random tamagotchi will be born and initialized.
+      </p>
+      <div style="text-align:center;">
+        <img class="img-rounded" src="pics/files_design.jpeg" alt="Generic placeholder image" style="width:30%;">
+        <h4>File Selection Design</h4>
+      </div>
+      <p style="text-align: left;padding: 0px 30px;">
+        Once the user chooses a tamagotchi, they will be directed to the main screen, which has the tamagotchi
+        image, the health, hunger, and happiness bars, the in-game time, and a menu with the options menu, back,
+        and quit. Selecting the menu leads the user to the actions that they can do; selecting back returns to
+        the file selection screen.
+      </p>
+      <div style="text-align:center;">
+        <img class="img-rounded" src="pics/main_design.jpeg" alt="Generic placeholder image" style="width:80%;">
+        <h4>Main Screen Design</h4>
+      </div>
+      <p style="text-align: left;padding: 0px 30px;">
+        To perform actions, the user can select the "menu" option. This leads to another menu with the options:
+        Info, Feed, Interact, Clean, Back, and Quit. Selecting Info displays information about the
+        tamagotchi, including its ID, name, age, health, hunger, and happiness. Feed initiates a mini-game
+        where the user has to try to catch watermelon falling from the top of the screen. Interact opens up
+        a camera for the user to take a picture. Because the tamagotchi poops incrementally, it is the user's
+        responsibility to clean up the poop. Thus, selecting clean allows the user to tap the screen and clean
+        up after their tamagotchi.
+      </p>
+      <div style="text-align:center;">
+        <img class="img-rounded" src="pics/actions_design.jpeg" alt="Generic placeholder image" style="width:80%;">
+        <h4>Actions Designs</h4>
+      </div>
+      <h3>Backend</h3>
+      <p style="text-align: left;padding: 0px 30px;">
+        In the backend, we used Pygame, OpenCV, and mySQL/Sqlite. We created the game database with three
+        tables: Users, Tamagotchis, and Relations. Users have information such as a UID and an image path for
+        the facial recognition. The tamagotchis table had every possible tamagotchi stored, with information
+        such as Tamagotchi ID, name, and image. The relations table was used to keep track of which users had
+        which tamagotchis, and the specific statistics (age, health, hunger, happiness) of these tamagotchis. We
+        had to set the primary key to the pair (UID, TID) because each entry would had a unique user and
+        corresponding tamagotchi.
+      </p>
+      <p style="text-align: left;padding: 0px 30px;">
+        For the facial recognition, we used OpenCV, specifically the face_recognition library. Using the
+        Pi-camera, the user would take a photo of themself. New users would save this photo in the user_images
+        folder and would be inserted into the database. Returning users or users who choose to interact with
+        their tamagotchi need to be recognized. After taking a photo, we use the face_recognition library's
+        face_encodings function to extract the features of the face. Then, we compare it to the features of the
+        faces in the database and take the Euclidean distance of these pairings. Finally, using argmin, we
+        select the user with the smallest distance.
+      </p>
+      <p style="text-align: left;padding: 0px 30px;">
+        Pygame was used to tie all of the features together. We used it to take the user's interactions with the
+        interface and update the screen accordingly. This included pulling data from the database, updating it
+        when feeding/cleaning, turning on the camera when needed, and handling menu navigation.
+      </p>
+      <p style="text-align: left;padding: 0px 30px;">
+        A feature we wanted to add as an extra was an emotion detection interaction, where the tamagotchi would
+        play a sound or get happier/sadder depending on the user's emotion. We were able to train an emotion
+        detection model with ~76% accuracy on our local machines. However, we ran into many issues when trying
+        to install the tensorflow and keras libraries on the Raspberry-Pi. The version of tensorflow available
+        for the os architecture was only available with Python 3.7, whereas we had Python 3.9. One solution we
+        found was to convert the model to a TFLite model, as we were able to successfully install TFLite on the
+        Raspberry-Pi. Unfortunately, after many attempts, we could not convert the model. The code and model can
+        be found in the github repository.
+      </p>
+      <h3>Hardware</h3>
+      <p style="text-align: left;padding: 0px 30px;">
+        We used the PiTFT to show the game screen, the Pi-camera to take photos, and the four GPIO pins on the
+        Raspberry-Pi. The four pins used were 17, 22, 23, and 27, which were mapped to the up, down, select, and
+        quit functions, respectively. Because the original Tamagotchi system was handheld, we created a
+        cardboard shell that looked like a house. The user could open a "door" to the PiTFT screen, similar to
+        having a pet at home.
+      </p>
+    </div>
+
+    <hr id='drawings'>
+
+    <div style="text-align:center;">
+      <h2>Drawings</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        We illustrated our Tamagotchis, status bars, and tombstone using pixel art.
+      </p>
+      <div class="row" style="text-align:center;">
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama1.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Capz</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama2.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Pacmen</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama3.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Jaredz</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama4.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Bob</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama5.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Kin gJuilan</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama6.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Jonathon</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama7.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Nola</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama8.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>NYSEG</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama9.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Epty</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama10.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Penguin</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tama11.png" alt="Generic placeholder image" width="100" height="100">
+          <h5>Fish</h5>
+        </div>
+      </div>
+      <h4>Tamagotchis</h4>
+      <div class="row" style="text-align:center;">
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/happy_bar.png" alt="Generic placeholder image" width="50" height="50">
+          <h5>Happiness</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/health_bar.png" alt="Generic placeholder image" width="50" height="50">
+          <h5>Health</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/hunger_bar.png" alt="Generic placeholder image" width="50" height="50">
+          <h5>Hunger</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/pizza.png" alt="Generic placeholder image" width="50" height="50">
+          <h5>Pizza</h5>
+        </div>
+        <div class="col-md-2" style="font-size:16px">
+          <img class="img-rounded" src="pics/tombstone.png" alt="Generic placeholder image" width="100" height="140">
+          <h5>Death</h5>
+        </div>
+      </div>
+      <h4>Other Icons</h4>
+    </div>
+
+    <hr id='testing'>
+
+    <div style="text-align:center;">
+      <h2>Testing</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        Our testing strategy was to isolate components/features of our code and get them to work before
+        combining them into the main game code. For facial recognition, we did testing using the camera.py file
+        and a separate testing database, and once it was working, we added the code into game.py and changed the
+        SQLite commands to interact with the main tamagotchi.db. One of our initial concerns was how accurate
+        the model would be, but after testing on 11 people, it only misclassified one person one time. All game
+        functionality testing was done by just running the code and checking print statements if something
+        wasn't working as intended.
+      </p>
+    </div>
+
+    <hr id='result'>
+
+    <div style="text-align:center;">
+      <h2>Result</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        For our demo, the cleaning poop feature was not working as intended, and crashed the software. However,
+        after rebooting the Raspberry-Pi, it started to work again, without any change in code. Everything else
+        worked as intended.
+      </p>
+    </div>
+
+    <hr>
+
+    <div class="row" style="text-align:center;">
+      <h2>Work Distribution</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        All work on the project was done together in lab.
+      </p>
+      <div class="col-md-6" style="font-size:16px">
+        <img class="img-rounded" src="pics/lulu.png" alt="Generic placeholder image" width="240" height="240">
+        <h3>Lulu</h3>
+        <p class="lead">lh543@cornell.edu</p>
+      </div>
+      <div class="col-md-6" style="font-size:16px">
+        <img class="img-rounded" src="pics/sana.jpg" alt="Generic placeholder image" width="240" height="240">
+        <h3>Sana</h3>
+        <p class="lead">sc2347@cornell.edu</p>
+      </div>
+    </div>
+
+    <hr>
+    <div style="font-size:18px">
+      <h2>Parts List</h2>
+      <ul>
+        <li>Raspberry Pi $35.00</li>
+        <li>Raspberry Pi Camera V2 $25.00</li>
+      </ul>
+      <h3>Total: $60.00</h3>
+    </div>
+    <hr>
+    <div style="font-size:18px">
+      <h2>References</h2>
+      <a href="https://picamera.readthedocs.io/">PiCamera Document</a><br>
+      <a href="https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/">R-Pi GPIO Document</a><br>
+      <a href="https://pypi.org/project/face-recognition/">Facial Recognition Library</a><br>
+      <a href="https://gist.github.com/ageitgey/1ac8dbe8572f3f533df6269dab35df65">dlib and face-recognition
+        installation</a><br>
+      <a href="https://www.pixilart.com/draw?ref=home-page">Pixel Art</a><br>
+
+
+    </div>
+
+    <hr>
+
+    <div class="row">
+      <h2>Code Appendix</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        Code can be found on <a href="https://github.com/luluhtutt/Pi-Tamagotchi">Github</a>
+      </p>
+    </div>
+
+  </div><!-- /.container -->
+
+
+
+
+  <!-- Bootstrap core JavaScript
+    ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+  <script src="dist/js/bootstrap.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <!-- <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+</body>
+
+</html>
