@@ -1,0 +1,187 @@
+Flex 1: 264
+Flex 2: 638
+Flex 3: 555
+Flex 4: 562
+Flex 5: 509
+Flex 1: 260
+Flex 2: 639
+Flex 3: 555
+Flex 4: 562
+Flex 5: 510
+Flex 1: 266
+Flex 2: 639
+Flex 3: 554
+Flex 4: 563
+Flex 5: 509
+Flex 1: 264
+Flex 2: 639
+Flex 3: 552
+Flex 4: 563
+Flex 5: 508
+Flex 1: 262
+Flex 2: 639
+Flex 3: 555
+Flex 4: 562
+Flex 5: 508
+Flex 1: 262
+Flex 2: 639
+Flex 3: 555
+Flex 4: 563
+Flex 5: 510
+Flex 1: 264
+Flex 2: 639
+Flex 3: 555
+Flex 4: 563
+Flex 5: 509
+Flex 1: 262
+Flex 2: 642
+Flex 3: 555
+Flex 4: 563
+Flex 5: 510
+Flex 1: 263
+Flex 2: 639
+Flex 3: 555
+Flex 4: 563
+Flex 5: 510
+Flex 1: 263
+Flex 2: 639
+Flex 3: 555
+Flex 4: 563
+Flex 5: 510
+Flex 1: 261
+Flex 2: 639
+Flex 3: 555
+Flex 4: 563
+Flex 5: 510
+Flex 1: 261
+Flex 2: 640
+Flex 3: 555
+Flex 4: 564
+Flex 5: 510
+
+
+Flex 1: 319
+Flex 2: 284
+Flex 3: 364
+Flex 4: 361
+Flex 5: 300
+Flex 1: 318
+Flex 2: 284
+Flex 3: 363
+Flex 4: 361
+Flex 5: 301
+Flex 1: 318
+Flex 2: 284
+Flex 3: 363
+Flex 4: 361
+Flex 5: 300
+Flex 1: 318
+Flex 2: 283
+Flex 3: 364
+Flex 4: 361
+Flex 5: 301
+Flex 1: 317
+Flex 2: 284
+Flex 3: 364
+Flex 4: 362
+Flex 5: 301
+Flex 1: 319
+Flex 2: 284
+Flex 3: 364
+Flex 4: 361
+Flex 5: 301
+Flex 1: 318
+Flex 2: 285
+Flex 3: 364
+Flex 4: 362
+Flex 5: 301
+Flex 1: 318
+Flex 2: 286
+Flex 3: 364
+Flex 4: 362
+Flex 5: 301
+
+
+
+Flex 1: 259
+Flex 2: 585
+Flex 3: 522
+Flex 4: 544
+Flex 5: 466
+Flex 1: 258
+Flex 2: 585
+Flex 3: 521
+Flex 4: 544
+Flex 5: 467
+Flex 1: 258
+Flex 2: 585
+Flex 3: 521
+Flex 4: 542
+Flex 5: 466
+Flex 1: 259
+Flex 2: 585
+Flex 3: 522
+Flex 4: 542
+Flex 5: 466
+Flex 1: 259
+Flex 2: 586
+Flex 3: 521
+Flex 4: 542
+Flex 5: 466
+Flex 1: 258
+Flex 2: 585
+Flex 3: 521
+Flex 4: 544
+Flex 5: 467
+
+
+
+
+
+
+
+
+
+
+STRAIGHT 
+Flex 1: 308
+Flex 2: 566
+Flex 3: 517
+Flex 4: 461
+Flex 5: 542
+
+Flex 1: 307
+Flex 2: 563
+Flex 3: 512
+Flex 4: 464
+Flex 5: 545
+
+
+HALF 
+Flex 1: 210-220
+Flex 2: 332
+Flex 3: 375
+Flex 4: 323
+Flex 5: 348
+
+Flex 1: 210-220
+Flex 2: 330
+Flex 3: 375
+Flex 4: 321
+Flex 5: 351
+
+BEND
+
+Flex 1: 266
+Flex 2: 224
+Flex 3: 292
+Flex 4: 263
+Flex 5: 198
+
+Flex 1: 261
+Flex 2: 209
+Flex 3: 293
+Flex 4: 259
+Flex 5: 200
+
+
