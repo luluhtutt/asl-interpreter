@@ -62,8 +62,8 @@
   <div class="container">
 
     <div class="starter-template">
-      <h1>Pi-Tamagotchi</h1>
-      <p class="lead">ECE 5725 Final Project<br>By Sana Chawla (sc2347) and Lulu Htutt (lh543).</p>
+      <h1>ASL Interpreter</h1>
+      <p class="lead">ECE 5730 Final Project<br>By Shi Gu (sg2562), Lulu Htutt (lh543), and Sana Chawla (sc2347).</p>
     </div>
 
     <hr>
@@ -78,58 +78,35 @@
     <div style="text-align:center;">
       <h2>Introduction</h2>
       <p style="text-align: left;padding: 0px 30px;">
-        Tamagotchi is a handheld virtual pet simulation game released in the 1990s, where the user must take
-        care of the pet by feeding and training it. Our project, Pi-Tamagotchi, is inspired by this nostalgic
-        system. We maintain the objective of taking care of virtual pets and keeping them happy, healthy, and
-        fed, but also incorporating a facial recognition component to foster a greater sense of comraderie and
-        connection. We used a Raspberry-Pi 4, a PiTFT, and a Pi camera to create a device reminiscent of the
-        Tamagotchi, and OpenCV and Pygame for the system software.
+        For our final project we designed and developed a glove based system that can detect the alphabets of the
+        American Sign Language (ASL) using flex sensors and an IMU.
+        We created
+        this system to provide an affordable alternative to expensive commercial sign language translation systems,
+        making communication more accessible for individuals who are non-verbal, hard of hearing, or deaf. The project
+        uses a Raspberry Pi Pico to process sensor data from five flex sensors (one for each finger), contact sensors
+        and an MPU6050 IMU
+        to detect hand orientation, implementing threshold-based signal processing to detect the ASL alphabet.
       </p>
     </div>
 
     <hr id='obj'>
 
-    <div class="row">
-      <div class="col-md-4" style="text-align:center;">
-        <img class="img-rounded" src="pics/device.jpg" alt="Generic placeholder image" width="240" height="240">
-      </div>
-      <div class="col-md-8" style="font-size:18px;">
-        <h2>Project Objective:</h2>
-        <ul>
-          <li>
-            Create an interactive system where the user has to take care of a virtual creature.
-          </li>
-          <li>
-            Use facial recognition to make Pi-Tamagotchi more interactive and personal.
-          </li>
-          <li>
-            Use a SQL database system to maintain game state.
-          </li>
-          <li>
-            Foster a sense of comraderie by maintaining a user's history of creatures.
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <hr id='design'>
 
     <div>
-      <h2 style="text-align:center;">Design</h2>
-      <h3>Frontend</h3>
+      <h2 style="text-align:center;">High Level Design</h2>
+      <h3>Rationale and Sources</h3>
+      <h3>Hardware Design</h3>
       <p style="text-align: left;padding: 0px 30px;">
-        The Pi-Tamagotchi user interface was implemented using Pygame, displayed on the PiTFT. We were able to
-        center the system around five main screens: Login, Files, Main, Action, and Death. For every menu where
-        the user had options to select, they would navigate through using buttons, and the current choice was
-        indicated by a '>' to the left of the menu item.
+        We decided to use a thresholding based system for detection
       </p>
       <p style="text-align: left;padding: 0px 30px;">
         The login screen had three options: New Player, Returning Player, and Quit. Choosing either of the two
         first options would open up a camera that counted down from 5.
       </p>
       <div style="text-align:center;">
-        <img class="img-rounded" src="pics/login_design.jpeg" alt="Generic placeholder image" style="width:80%;">
-        <h4>Login Design</h4>
+        <img class="img-rounded" src="pics/glove_pic.jpeg" alt="Generic placeholder image" style="width:50%;">
+        <h3>Glove showing sensor placements</h3>
       </div>
       <p style="text-align: left;padding: 0px 30px;">
         After logging in as a new/returning user, the user is redirected to a screen with all of their available
@@ -165,7 +142,7 @@
         <img class="img-rounded" src="pics/actions_design.jpeg" alt="Generic placeholder image" style="width:80%;">
         <h4>Actions Designs</h4>
       </div>
-      <h3>Backend</h3>
+      <h3>Software Design</h3>
       <p style="text-align: left;padding: 0px 30px;">
         In the backend, we used Pygame, OpenCV, and mySQL/Sqlite. We created the game database with three
         tables: Users, Tamagotchis, and Relations. Users have information such as a UID and an image path for
@@ -291,7 +268,7 @@
     <hr id='testing'>
 
     <div style="text-align:center;">
-      <h2>Testing</h2>
+      <h2>Conclusion</h2>
       <p style="text-align: left;padding: 0px 30px;">
         Our testing strategy was to isolate components/features of our code and get them to work before
         combining them into the main game code. For facial recognition, we did testing using the camera.py file
@@ -308,51 +285,31 @@
     <div style="text-align:center;">
       <h2>Result</h2>
       <p style="text-align: left;padding: 0px 30px;">
-        For our demo, the cleaning poop feature was not working as intended, and crashed the software. However,
-        after rebooting the Raspberry-Pi, it started to work again, without any change in code. Everything else
-        worked as intended.
+        For our demo, we had a little trouble getting detecting the letter R.
       </p>
     </div>
 
     <hr>
-
-    <div class="row" style="text-align:center;">
-      <h2>Work Distribution</h2>
-      <p style="text-align: left;padding: 0px 30px;">
-        All work on the project was done together in lab.
-      </p>
-      <div class="col-md-6" style="font-size:16px">
-        <img class="img-rounded" src="pics/lulu.png" alt="Generic placeholder image" width="240" height="240">
-        <h3>Lulu</h3>
-        <p class="lead">lh543@cornell.edu</p>
-      </div>
-      <div class="col-md-6" style="font-size:16px">
-        <img class="img-rounded" src="pics/sana.jpg" alt="Generic placeholder image" width="240" height="240">
-        <h3>Sana</h3>
-        <p class="lead">sc2347@cornell.edu</p>
-      </div>
-    </div>
 
     <hr>
     <div style="font-size:18px">
       <h2>Parts List</h2>
       <ul>
-        <li>Raspberry Pi $35.00</li>
-        <li>Raspberry Pi Camera V2 $25.00</li>
+        <li>Raspberry Pi Pico</li>
+        <li>IMU</li>
+        <li>Flex Sensors</li>
+        <li>Glove</li>
+        <li>Copper contact sensors</li>
+        <li>8 channel ADC</li>
       </ul>
-      <h3>Total: $60.00</h3>
+      <h3>Total: $66.74</h3>
     </div>
     <hr>
     <div style="font-size:18px">
       <h2>References</h2>
-      <a href="https://picamera.readthedocs.io/">PiCamera Document</a><br>
-      <a href="https://sourceforge.net/p/raspberry-gpio-python/wiki/Home/">R-Pi GPIO Document</a><br>
-      <a href="https://pypi.org/project/face-recognition/">Facial Recognition Library</a><br>
-      <a href="https://gist.github.com/ageitgey/1ac8dbe8572f3f533df6269dab35df65">dlib and face-recognition
-        installation</a><br>
-      <a href="https://www.pixilart.com/draw?ref=home-page">Pixel Art</a><br>
-
-
+      <a href="https://www.sparkfun.com/flex-sensor-2-2.html">Flex Sensors</a><br>
+      <a href="https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf">IMU Datasheet</a><br>
+      <a href="https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf">8 Channel ADC</a><br>
     </div>
 
     <hr>
@@ -363,6 +320,15 @@
         Code can be found on <a href="https://github.com/luluhtutt/Pi-Tamagotchi">Github</a>
       </p>
     </div>
+
+    <div class="row">
+      <h2>Appendix A</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        The group approves this report for inclusion on the course website.
+        The group approves the video for inclusion on the course youtube channel.
+      </p>
+    </div>
+
 
   </div><!-- /.container -->
 
