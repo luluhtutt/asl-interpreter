@@ -98,52 +98,75 @@
       <h3>Rationale and Sources</h3>
       <h3>Hardware Design</h3>
       <p style="text-align: left;padding: 0px 30px;">
-        We decided to use a thresholding based system for detection
-      </p>
-      <p style="text-align: left;padding: 0px 30px;">
-        The login screen had three options: New Player, Returning Player, and Quit. Choosing either of the two
-        first options would open up a camera that counted down from 5.
+        Our hardware includes a glove with 3 different kinds of sensors for detecting gestures of each letter in ASL alphabet.
+        The following is the picture of our final project:
       </p>
       <div style="text-align:center;">
-        <img class="img-rounded" src="pics/glove_pic.jpeg" alt="Generic placeholder image" style="width:50%;">
-        <h3>Glove showing sensor placements</h3>
+        <img class="img-rounded" src="pics/glove_pic.jpeg" alt="Generic placeholder image" style="width:30%;">
+        <h4>Picutre of the final project</h4>
       </div>
       <p style="text-align: left;padding: 0px 30px;">
-        After logging in as a new/returning user, the user is redirected to a screen with all of their available
-        tamagotchis. For new users, all of the ten slots will be empty, but for returning users, the slots will
-        have their saved tamagotchis and data. Each "file" slot has the tamagotchi's ID and name, as well as an
-        icon. The user can navigate through these slots and select the one they desire to interact with. If an
-        EMPTY slot is selected, a new, random tamagotchi will be born and initialized.
+        We placed five flex sensors on the top of each finger to detect individual finger bending. 
+        The resistance of a flex sensor increases when it is bent, allowing it to act as a variable resistor.
+        By connecting each sensor in a voltage divider configuration with a pull-down resistor, 
+        we can convert the resistance change into a measurable voltage. 
+        The output voltage is then read by the microcontroller to determine the degree of bending. 
+        To maximize sensitivity, we selected the pull-down resistor values based on the unbent resistance of each flex sensor. 
+        One sensor had a much higher baseline resistance (~90 kΩ), while the others measured closer to ~60 kΩ. 
+        We chose resistor values that are comparable to these resistances to ensure a larger voltage swing in response 
+        to bending, which is helpful for our detection accuracy.
       </p>
+
+      <p style="text-align: left;padding: 0px 30px;">
+        For reading all 5 values of each flex sensor, we used an external 10-bit 8-channel Analogue-to-Digital Converter (ADC) with SPI protocol.
+        Raspberry Pi Pico with RP2040 has 3 ADC reading pins which is not enough for 5 readings. Since gesture detection 
+        does not need high-speed or real-time sampling, we used an 8-channel ADC which has an internal multiplexer to 
+        sequentially return readings of each ADC channel.
+      </p>
+
+      <p style="text-align: left;padding: 0px 30px;">
+        We used a Inertial Measurement Unit (IMU), specifically MPU6050, to detect the rotation and motion of the hand.
+        It was placed at the center of the back of the glove and communicates with Raspberry Pi via I2C protocol. 
+        The IMU contains both an accelerometer and a gyroscope. 
+        The accelerometer provides acceleration readings along three axes, which can be used to estimate orientation, 
+        while the gyroscope measures angular velocity along the same axes to detect motion.
+        Both types of data are essential for accurate gesture recognition because some letters have the same fingers bent but differ  
+        in hand orientations, such as P and K, and some letters are dynamic such as J and Z.
+      </p>
+
+      <p style="text-align: left;padding: 0px 30px;">
+        Contact sensors are employed to detect contacts. Below is the configuration of our contact sensors:
+      </p>
+
       <div style="text-align:center;">
-        <img class="img-rounded" src="pics/files_design.jpeg" alt="Generic placeholder image" style="width:30%;">
-        <h4>File Selection Design</h4>
+        <img class="img-rounded" src="pics/contact_sensor.png" alt="Generic placeholder image" style="width:30%;">
+        <h4>Contact Sensor Configuration - Each circle represents a copper foil (Red indicates 3.3 V, and Green are GPIO inputs)</h4>
       </div>
       <p style="text-align: left;padding: 0px 30px;">
-        Once the user chooses a tamagotchi, they will be directed to the main screen, which has the tamagotchi
-        image, the health, hunger, and happiness bars, the in-game time, and a menu with the options menu, back,
-        and quit. Selecting the menu leads the user to the actions that they can do; selecting back returns to
-        the file selection screen.
+        The sensors are configured in a pull-up way. The red circles are copper foils wired to 3.3 V power pin, while the green circles are 
+        copper foils connected to GPIO inputs. As red and green contacts, the GPIO input should return a HIGH reading, indicating two fingers contact.
+        This is useful to identify letters that differ only in fingers contact such as U and V.
       </p>
+
+      <p style="text-align: left;padding: 0px 30px;">
+        Beside sensors for detecting gesture, VGA and a button is used to display the corresponding letters detected. We connected a Raspberry Pi debugger to 
+        print detected letters on the serial monitor. And the user can press the button to print the letter detected to the VGA screen. Below is an example of 
+        printed "HELLO WORLD".
+      </p>
+
       <div style="text-align:center;">
-        <img class="img-rounded" src="pics/main_design.jpeg" alt="Generic placeholder image" style="width:80%;">
-        <h4>Main Screen Design</h4>
+        <img class="img-rounded" src="pics/vga_hello_world.jpeg" alt="Generic placeholder image" style="width:30%;">
+        <h4>HELLO WORLD printed on VGA screen</h4>
       </div>
-      <p style="text-align: left;padding: 0px 30px;">
-        To perform actions, the user can select the "menu" option. This leads to another menu with the options:
-        Info, Feed, Interact, Clean, Back, and Quit. Selecting Info displays information about the
-        tamagotchi, including its ID, name, age, health, hunger, and happiness. Feed initiates a mini-game
-        where the user has to try to catch watermelon falling from the top of the screen. Interact opens up
-        a camera for the user to take a picture. Because the tamagotchi poops incrementally, it is the user's
-        responsibility to clean up the poop. Thus, selecting clean allows the user to tap the screen and clean
-        up after their tamagotchi.
-      </p>
+
       <div style="text-align:center;">
         <img class="img-rounded" src="pics/actions_design.jpeg" alt="Generic placeholder image" style="width:80%;">
         <h4>Actions Designs</h4>
       </div>
       <h3>Software Design</h3>
       <p style="text-align: left;padding: 0px 30px;">
+        We decided to use a thresholding based system for detection
+
         In the backend, we used Pygame, OpenCV, and mySQL/Sqlite. We created the game database with three
         tables: Users, Tamagotchis, and Relations. Users have information such as a UID and an image path for
         the facial recognition. The tamagotchis table had every possible tamagotchi stored, with information
@@ -189,7 +212,7 @@
     <hr id='drawings'>
 
     <div style="text-align:center;">
-      <h2>Drawings</h2>
+      <h2>Results of the Design</h2>
       <p style="text-align: left;padding: 0px 30px;">
         We illustrated our Tamagotchis, status bars, and tombstone using pixel art.
       </p>
@@ -326,6 +349,13 @@
       <p style="text-align: left;padding: 0px 30px;">
         The group approves this report for inclusion on the course website.
         The group approves the video for inclusion on the course youtube channel.
+      </p>
+    </div>
+
+    <div class="row"></div>
+      <h2>Appendix B</h2>
+      <p style="text-align: left;padding: 0px 30px;">
+        Schematics of our system:
       </p>
     </div>
 
