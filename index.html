@@ -128,7 +128,7 @@
                     </a>
                 </li>
             </ul>
-            <h3>Hardware Design</h3>
+            <h2 style="text-align:center;">Hardware Design</h2>
             <p style="text-align: left;padding: 0px 30px;">
                 Our hardware includes a glove with 3 different kinds of sensors for detecting gestures of each letter in
                 ASL alphabet.
@@ -136,7 +136,11 @@
             </p>
             <div style="text-align:center;">
                 <img class="img-rounded" src="pics/glove_pic.jpeg" alt="Generic placeholder image" style="width:30%;">
-                <h4>Picutre of the final project</h4>
+                <h4>Picture of the final project</h4>
+
+                <img class="img-rounded" src="pics/circuit_diagram.png" alt="Generic placeholder image"
+                    style="width:90%;">
+                <h4>Circuit Diagram of ASL Interpreter</h4>
             </div>
             <p style="text-align: left;padding: 0px 30px;">
                 We placed five flex sensors on the top of each finger to detect individual finger bending.
@@ -208,53 +212,187 @@
                 <h4>HELLO WORLD printed on VGA screen</h4>
             </div>
 
-            <h3>Software Design</h3>
+            <h2 style="text-align:center;">Software Design</h2>
+            <h4 style="padding-left: 30px;">Gesture Recognition Framework</h4>
             <p style="text-align: left;padding: 0px 30px;">
-                We decided to use a thresholding based system for detection
-
-                In the backend, we used Pygame, OpenCV, and mySQL/Sqlite. We created the game database with three
-                tables: Users, Tamagotchis, and Relations. Users have information such as a UID and an image path for
-                the facial recognition. The tamagotchis table had every possible tamagotchi stored, with information
-                such as Tamagotchi ID, name, and image. The relations table was used to keep track of which users had
-                which tamagotchis, and the specific statistics (age, health, hunger, happiness) of these tamagotchis. We
-                had to set the primary key to the pair (UID, TID) because each entry would had a unique user and
-                corresponding tamagotchi.
-            </p>
-            <p style="text-align: left;padding: 0px 30px;">
-                For the facial recognition, we used OpenCV, specifically the face_recognition library. Using the
-                Pi-camera, the user would take a photo of themself. New users would save this photo in the user_images
-                folder and would be inserted into the database. Returning users or users who choose to interact with
-                their tamagotchi need to be recognized. After taking a photo, we use the face_recognition library's
-                face_encodings function to extract the features of the face. Then, we compare it to the features of the
-                faces in the database and take the Euclidean distance of these pairings. Finally, using argmin, we
-                select the user with the smallest distance.
-            </p>
-            <p style="text-align: left;padding: 0px 30px;">
-                Pygame was used to tie all of the features together. We used it to take the user's interactions with the
-                interface and update the screen accordingly. This included pulling data from the database, updating it
-                when feeding/cleaning, turning on the camera when needed, and handling menu navigation.
-            </p>
-            <p style="text-align: left;padding: 0px 30px;">
-                A feature we wanted to add as an extra was an emotion detection interaction, where the tamagotchi would
-                play a sound or get happier/sadder depending on the user's emotion. We were able to train an emotion
-                detection model with ~76% accuracy on our local machines. However, we ran into many issues when trying
-                to install the tensorflow and keras libraries on the Raspberry-Pi. The version of tensorflow available
-                for the os architecture was only available with Python 3.7, whereas we had Python 3.9. One solution we
-                found was to convert the model to a TFLite model, as we were able to successfully install TFLite on the
-                Raspberry-Pi. Unfortunately, after many attempts, we could not convert the model. The code and model can
-                be found in the github repository.
-            </p>
-            <h3>Hardware</h3>
-            <p style="text-align: left;padding: 0px 30px;">
-                We used the PiTFT to show the game screen, the Pi-camera to take photos, and the four GPIO pins on the
-                Raspberry-Pi. The four pins used were 17, 22, 23, and 27, which were mapped to the up, down, select, and
-                quit functions, respectively. Because the original Tamagotchi system was handheld, we created a
-                cardboard shell that looked like a house. The user could open a "door" to the PiTFT screen, similar to
-                having a pet at home.
+                We implemented a structured approach to match hand positions to predefined signs using a comprehensive
+                data
+                structure. Each gesture is defined by a combination of finger positions (categorized as straight,
+                half-bent, or
+                fully bent for each finger), hand orientation data from the IMU (when applicable), and contact points
+                between
+                fingers (detected through contact sensors). This structured representation allows us to efficiently
+                compare
+                incoming sensor data against our library of recognized signs.
             </p>
 
-            <img class="img-rounded" src="pics/circuit_diagram.png" alt="Generic placeholder image" style="width:90%;">
-            <h4 style="text-align: center;">Circuit Diagram</h4>
+            <h4 style="padding-left: 30px;">Mathematical Foundation</h4>
+            <p style="text-align: left;padding: 0px 30px;">
+                The system relies on several mathematical techniques to process sensor data accurately. We utilize 15.16
+                fixed-point representation for all our calculations, which allocates 15 bits for the integer part and 16
+                bits
+                for the fractional part. This approach achieves high precision while avoiding the computational overhead
+                of
+                floating-point operations on the microcontroller.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                To reduce noise in accelerometer readings, we implement a first-order IIR (Infinite Impulse Response)
+                low-pass
+                filter. This filter is described by the equation: y[n] = α·y[n-1] + (1-α)·x[n], where y[n] is the
+                filtered
+                output, y[n-1] is the previous filtered value, x[n] is the current input, and α is a smoothing factor
+                (0.35 in
+                our implementation). We optimize this calculation using bit-shifting operations to improve performance
+                on the
+                microcontroller.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                For determining hand orientation, we use arctangent functions on the accelerometer data. Specifically,
+                we
+                calculate pitch (rotation around the y-axis) using atan2(-ax, az), roll (rotation around the x-axis)
+                using
+                atan2(az, -ay), and yaw (rotation around the z-axis) using atan2(ax, ay). These calculations convert the
+                raw
+                accelerometer readings into meaningful angular measurements in degrees, which are essential for
+                distinguishing
+                between gestures with similar finger positions but different hand orientations.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                Additionally, we implemented a complementary filter that combines accelerometer and gyroscope data to
+                achieve
+                more stable orientation tracking. This filter is described by the equation: angle = 0.999 × (angle +
+                gyro_data ×
+                dt) + 0.001 × accel_angle. The gyroscope provides accurate short-term measurements but suffers from
+                drift over
+                time, while the accelerometer provides absolute but noisy orientation references. The complementary
+                filter
+                leverages the strengths of both sensors to provide a more reliable orientation estimate.
+            </p>
+
+            <h4 style="padding-left: 30px;">Gesture Detection Pipeline</h4>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <img src="pics/sign-language-flowchart.jpg" alt="Gesture Detection Flow"
+                    style="width:80%; max-width:600px; border: 1px solid #ddd; padding: 10px; border-radius: 5px;">
+                <p><em>High-level diagram of the gesture detection process</em></p>
+            </div>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                Our gesture detection follows a sophisticated pipeline that begins with sensor data acquisition, where
+                we read
+                raw values from the flex sensors and IMU at a consistent sampling rate. The system then applies signal
+                processing techniques, including the aforementioned filtering and averaging methods, to reduce noise and
+                extract
+                meaningful features from the raw data.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                In the feature extraction stage, we convert these processed readings into meaningful descriptors. For
+                flex
+                sensors, we categorize finger positions into three states (straight, half-bent, or fully bent) based on
+                carefully calibrated threshold values that were determined through experimental testing. For IMU data,
+                we
+                convert raw accelerometer and gyroscope readings into angular measurements that describe the hand's
+                orientation
+                in three-dimensional space.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                The gesture classification stage is where the system matches these extracted features against our
+                predefined
+                gesture patterns. This matching process follows a hierarchical approach: first, it checks if the flex
+                sensor
+                patterns match; then, if contact sensors are used for a gesture, it verifies the contact points;
+                finally, for
+                gestures requiring specific hand orientations, it validates IMU readings within acceptable thresholds.
+                This
+                hierarchical approach improves efficiency by quickly eliminating non-matching gestures early in the
+                process.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                For distinguishing between similar gestures, such as 'I' and 'J' which have identical finger positions,
+                we
+                incorporated dynamic gesture recognition by analyzing gyroscope data to detect specific motion patterns.
+                Once a
+                complete match is found, the corresponding letter is identified and sent to the output generation stage,
+                where
+                it is displayed on the VGA screen.
+            </p>
+
+            <h4 style="padding-left: 30px;">Multi-threaded Architecture</h4>
+            <p style="text-align: left;padding: 0px 30px;">
+                We implemented our software using a multi-threaded design based on protothreads, a lightweight threading
+                library
+                that enables cooperative multitasking with minimal overhead. This approach allows for efficient
+                concurrent
+                execution of multiple tasks without the complexity of a full-fledged operating system.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                Our system architecture consists of three main components: the main thread, which handles system
+                initialization,
+                sensor setup, and scheduling; the VGA thread, which manages the display, updates the screen with
+                recognized
+                gestures, and processes button inputs; and sensor processing, which is implemented within an interrupt
+                service
+                routine (ISR) to ensure consistent sampling rates and timely data processing.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                We use semaphores for thread synchronization to ensure data consistency between the sensor processing
+                and
+                display components. When new sensor data is processed and a gesture is recognized, the sensor processing
+                routine
+                signals the VGA thread using a semaphore, which then updates the display with the recognized letter.
+                This
+                decoupled architecture improves responsiveness and allows the system to continue processing sensor data
+                even
+                while the display is being updated.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                The system also incorporates a button debouncing mechanism implemented as a state machine with four
+                states: not
+                pressed, maybe pressed, pressed, and maybe not pressed. This approach ensures reliable button detection
+                even
+                with physical button bounces, enhancing the user experience when capturing gestures.
+            </p>
+
+            <h4 style="padding-left: 30px;">Hardware Communication</h4>
+            <p style="text-align: left;padding: 0px 30px;">
+                Our software interfaces with various hardware components through specialized communication protocols. We
+                use I2C
+                communication with the MPU6050 IMU sensor, configuring the sensor for optimal performance and regularly
+                polling
+                it for accelerometer and gyroscope data. For the flex sensors, we use SPI protocol to communicate with
+                the
+                MCP3008 analog-to-digital converter, which translates the analog resistance changes from the flex
+                sensors into
+                digital values that our software can process.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                We also employ GPIO pins for button input and contact sensing, configuring them with appropriate pull-up
+                or
+                pull-down resistors to ensure reliable detection. For the VGA display, we implemented a custom driver
+                that
+                generates the necessary timing signals (Hsync and Vsync) and RGB color values to render text on a
+                standard VGA
+                monitor, providing immediate visual feedback to the user.
+            </p>
+
+            <p style="text-align: left;padding: 0px 30px;">
+                The software is written in C and runs on a Raspberry Pi Pico microcontroller, utilizing the RP2040 SDK.
+                We
+                designed the code to be modular, with distinct components handling sensor input, signal processing,
+                gesture
+                recognition, and display output, allowing for easy expansion to recognize more signs in the future.
+            </p>
+
         </div>
 
         <hr id='result'>
@@ -300,6 +438,14 @@
             <a href="https://invensense.tdk.com/wp-content/uploads/2015/02/MPU-6000-Datasheet1.pdf">IMU
                 Datasheet</a><br>
             <a href="https://cdn-shop.adafruit.com/datasheets/MCP3008.pdf">8 Channel ADC</a><br>
+            <a href="https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2014/rdv28_mjl256/webpage/"
+                target="_blank">
+                Fall 2014: rdv28_mjl256
+            </a><br>
+            <a href="https://people.ece.cornell.edu/land/courses/ece4760/FinalProjects/f2018/aac94_kd333_rp426/aac94_kd333_rp426/aac94_kd333_rp426/main.html"
+                target="_blank">
+                Fall 2018: aac94_kd333_rp426
+            </a>
         </div>
 
         <hr>
@@ -312,10 +458,18 @@
         </div>
 
         <div class="row">
-            <h2>Appendix A</h2>
+            <h3>Appendix A</h3>
             <p style="text-align: left;padding: 0px 30px;">
                 The group approves this report for inclusion on the course website.
                 The group approves the video for inclusion on the course youtube channel.
+            </p>
+            <h3>Appendix B: Work Distribution</h3>
+            <p style="text-align: left;padding: 0px 30px;">A majority of the lab was done together in lab or somewhere
+                on campus. Shi Gu set up and integrated the hardware, including calculations for the flex sensor
+                circuits and setting up the ADC. Sana Chawla stitched the glove and wrote the software, including the
+                character matching functionality and threading logic. Lulu Htutt soldered and wrote the software,
+                including the gesture data structure and the sensor reading functionality. Overall, we worked very well
+                as a team.
             </p>
         </div>
     </div>
